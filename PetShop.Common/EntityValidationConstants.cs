@@ -24,5 +24,11 @@
             public const int NameMinLength = 2;
             public const int NameMaxLength = 30;
         }
+
+        public static class AnimalType
+        {
+            public const int NameMinLength = 2;
+            public const int NameMaxLength = 50;
+        }
     }
 }   
