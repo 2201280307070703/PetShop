@@ -59,16 +59,16 @@
 
         //    product = new Product()
         //    {
-        //        Name="",
-        //        Description="",
-        //        ImageUrl="",
-        //        Price=,
-        //        Quanity=,
-        //        CategoryId=,
-        //        AnimalTypeId=,
-        //        AgeTypeId=,
-        //        SellerId=,
-        //        UserId=
+        //        Name = "",
+        //        Description = "",
+        //        ImageUrl = "",
+        //        Price =,
+        //        Quanity =,
+        //        CategoryId =,
+        //        AnimalTypeId =,
+        //        AgeTypeId =,
+        //        SellerId =,
+        //        UserId =
         //    };
         //}
     }

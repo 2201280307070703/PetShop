@@ -25,7 +25,7 @@
 
         public decimal Price { get; set; }
 
-        public decimal Quanity { get; set; }
+        public int Quanity { get; set; }
 
         public bool IsActive { get; set; }
 
