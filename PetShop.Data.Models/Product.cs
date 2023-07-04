@@ -46,5 +46,9 @@
         public Guid SellerId { get; set; }
 
         public virtual Seller Seller { get; set; } = null!;
+
+        public Guid UserId { get; set; }
+
+        public ApplicationUser User { get; set; } = null!
     }
 }

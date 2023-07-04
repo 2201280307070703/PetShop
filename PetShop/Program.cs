@@ -3,6 +3,8 @@ namespace PetShop
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using PetShop.Data;
+    using PetShop.Data.Models;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -13,7 +15,7 @@ namespace PetShop
             builder.Services.AddDbContext<PetShopDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => 
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options => 
             {
                 options.SignIn.RequireConfirmedAccount = 
                     builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
