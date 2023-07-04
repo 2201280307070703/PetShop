@@ -10,7 +10,7 @@ namespace PetShop
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
             string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            builder.Services.AddDbContext<PetShopDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options => 
@@ -26,7 +26,7 @@ namespace PetShop
                 options.Password.RequiredLength =
                     builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
             })
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<PetShopDbContext>();
             builder.Services.AddControllersWithViews();
 
             WebApplication app = builder.Build();
