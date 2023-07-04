@@ -30,5 +30,11 @@
             public const int NameMinLength = 2;
             public const int NameMaxLength = 50;
         }
+
+        public static class AgeType
+        {
+            public const int AgeTypeMinLength = 2;
+            public const int AgeTypeMaxLength = 50;
+        }
     }
 }   
