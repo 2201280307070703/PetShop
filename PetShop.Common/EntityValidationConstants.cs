@@ -18,5 +18,11 @@
             public const string QuantityMinValue = "0";
             public const string QuantityMaxValue = "10000";
         }
+
+        public static class  Category
+        {
+            public const int NameMinLength = 2;
+            public const int NameMaxLength = 30;
+        }
     }
 }   

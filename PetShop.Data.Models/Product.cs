@@ -1,16 +1,27 @@
-﻿using System.ComponentModel;
-
-namespace PetShop.Data.Models
+﻿namespace PetShop.Data.Models
 {
+    using System.ComponentModel.DataAnnotations;
+    using static PetShop.Common.EntityValidationConstants.Product;
     public class Product
     {
+        public Product()
+        {
+            this.Id = Guid.NewGuid();
+        }
+
         public Guid Id { get; set; }
 
-        public string Name { get; set; }
+        [Required]
+        [MaxLength(NameMaxLength)]
+        public string Name { get; set; } = null!;
 
-        public string Description { get; set; }
+        [Required]
+        [MaxLength(DescriptionMaxLength)]
+        public string Description { get; set; } = null!;
 
-        public string ImageUrl { get; set; }
+        [Required]
+        [MaxLength(ImageUrlMaxLength)]
+        public string ImageUrl { get; set; } = null!;
 
         public decimal Price { get; set; }
 
@@ -22,14 +33,14 @@ namespace PetShop.Data.Models
 
         public int CategoryId { get; set; }
 
-        public Category Category { get; set; }
+        public Category Category { get; set; } = null!;
 
         public int AnimalTypeId { get; set; }
 
-        public AnimalType AnimalType { get; set; }
+        public AnimalType AnimalType { get; set; } = null!;
 
         public Guid SellerId { get; set; }
 
-        public Seller Seller { get; set; }
+        public Seller Seller { get; set; } = null!;
     }
 }
