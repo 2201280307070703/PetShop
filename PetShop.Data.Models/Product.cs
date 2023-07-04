@@ -33,14 +33,18 @@
 
         public int CategoryId { get; set; }
 
-        public Category Category { get; set; } = null!;
+        public virtual Category Category { get; set; } = null!;
 
         public int AnimalTypeId { get; set; }
 
-        public AnimalType AnimalType { get; set; } = null!;
+        public virtual AnimalType AnimalType { get; set; } = null!;
+
+        public int AgeTypeId { get; set; }
+
+        public virtual AgeType AgeType { get; set; } = null!;
 
         public Guid SellerId { get; set; }
 
-        public Seller Seller { get; set; } = null!;
+        public virtual Seller Seller { get; set; } = null!;
     }
 }
