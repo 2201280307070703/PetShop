@@ -41,6 +41,14 @@
             builder
                 .Property(a=>a.IsActive)
                 .HasDefaultValue(true);
+
+            builder
+                .Property(p => p.Price)
+                .HasPrecision(18, 2);
+
+            builder
+                .Property(q => q.Quanity)
+                .HasPrecision(18, 2);
         }
 
         //private Product[] GenerateProducts()

@@ -10,5 +10,7 @@
         }
 
         public virtual ICollection<Product> AddedProducts { get; set; }
+
+        public virtual Seller Seller { get; set; } = null!;
     }
 }
