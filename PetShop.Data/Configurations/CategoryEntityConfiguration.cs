@@ -7,7 +7,7 @@
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
-            throw new NotImplementedException();
+            builder.HasData(GenerateCategories());
         }
 
         private Category[] GenerateCategories()
@@ -26,7 +26,7 @@
 
             category = new Category()
             {
-                Id = 1,
+                Id = 2,
                 Name = "Clothes"
             };
 
@@ -34,7 +34,7 @@
 
             category = new Category()
             {
-                Id = 1,
+                Id = 3,
                 Name = "Beds"
             };
 
@@ -42,7 +42,7 @@
 
             category = new Category()
             {
-                Id = 1,
+                Id = 4,
                 Name = "Toys"
             };
 
@@ -50,7 +50,7 @@
 
             category = new Category()
             {
-                Id = 1,
+                Id = 5,
                 Name = "Dog straps"
             };
 

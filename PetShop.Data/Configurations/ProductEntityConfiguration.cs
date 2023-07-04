@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PetShop.Data.Models;
-
-namespace PetShop.Data.Configurations
+﻿namespace PetShop.Data.Configurations
 {
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using PetShop.Data.Models;
     public class ProductEntityConfiguration : IEntityTypeConfiguration<Product>
     {
         public void Configure(EntityTypeBuilder<Product> builder)
@@ -43,5 +42,26 @@ namespace PetShop.Data.Configurations
                 .Property(a=>a.IsActive)
                 .HasDefaultValue(true);
         }
+
+        //private Product[] GenerateProducts()
+        //{
+        //    ICollection<Product> products = new HashSet<Product>();
+
+        //    Product product;
+
+        //    product = new Product()
+        //    {
+        //        Name="",
+        //        Description="",
+        //        ImageUrl="",
+        //        Price=,
+        //        Quanity=,
+        //        CategoryId=,
+        //        AnimalTypeId=,
+        //        AgeTypeId=,
+        //        SellerId=,
+        //        UserId=
+        //    };
+        //}
     }
 }
