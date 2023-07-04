@@ -46,30 +46,44 @@
                 .Property(p => p.Price)
                 .HasPrecision(18, 2);
 
-            builder
-                .Property(q => q.Quanity)
-                .HasPrecision(18, 2);
+          
         }
 
-        //private Product[] GenerateProducts()
-        //{
-        //    ICollection<Product> products = new HashSet<Product>();
+        private Product[] GenerateProducts()
+        {
+            ICollection<Product> products = new HashSet<Product>();
 
-        //    Product product;
+            Product product;
 
-        //    product = new Product()
-        //    {
-        //        Name = "",
-        //        Description = "",
-        //        ImageUrl = "",
-        //        Price =,
-        //        Quanity =,
-        //        CategoryId =,
-        //        AnimalTypeId =,
-        //        AgeTypeId =,
-        //        SellerId =,
-        //        UserId =
-        //    };
-        //}
+            product = new Product()
+            {
+                Name="Dog sweatshirt",
+                Description="This is cozy and warm cloth for you dog.",
+                ImageUrl= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRBjhNm1ffsW7Von6PLqbcd6Syserv-j6pxw&usqp=CAU",
+                Price=10.00M,
+                CategoryId=2,
+                AnimalTypeId=1,
+                AgeTypeId=3,
+                SellerId= Guid.Parse("f9a6a707-3ee6-4ae8-92ee-7d49f67c9242")
+            };
+
+            products.Add(product);
+
+            product = new Product()
+            {
+                Name = "Fish food",
+                Description = "This is the best food for you fishes, it is rich in vitams and minerals.",
+                ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN5RTYv_uPWx8wEV-D8KFyw6iSQ2wmnP-aPA&usqp=CAU",
+                Price = 5.00M,
+                CategoryId = 1,
+                AnimalTypeId = 4,
+                AgeTypeId = 2,
+                SellerId = Guid.Parse("f9a6a707-3ee6-4ae8-92ee-7d49f67c9242")
+            };
+
+            products.Add(product);
+
+            return products.ToArray();
+        }
     }
 }
