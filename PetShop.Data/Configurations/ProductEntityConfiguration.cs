@@ -8,6 +8,9 @@
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder
+                .HasData(this.GenerateProducts());
+
+            builder
                  .HasOne(p => p.Category)
                  .WithMany(c => c.Products)
                  .HasForeignKey(p => p.CategoryId)
@@ -64,7 +67,8 @@
                 CategoryId=2,
                 AnimalTypeId=1,
                 AgeTypeId=3,
-                SellerId= Guid.Parse("f9a6a707-3ee6-4ae8-92ee-7d49f67c9242")
+                SellerId= Guid.Parse("F9A6A707-3EE6-4AE8-92EE-7D49F67C9242"),
+               // UserId = Guid.Parse("724FE465-7EC4-4C35-93E9-87765D6641A9")
             };
 
             products.Add(product);
@@ -78,7 +82,8 @@
                 CategoryId = 1,
                 AnimalTypeId = 4,
                 AgeTypeId = 2,
-                SellerId = Guid.Parse("f9a6a707-3ee6-4ae8-92ee-7d49f67c9242")
+                SellerId = Guid.Parse("F9A6A707-3EE6-4AE8-92EE-7D49F67C9242"),
+                //UserId = Guid.Parse("724FE465-7EC4-4C35-93E9-87765D6641A9")
             };
 
             products.Add(product);

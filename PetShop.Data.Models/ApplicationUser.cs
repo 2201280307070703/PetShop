@@ -11,6 +11,8 @@
 
         public virtual ICollection<Product> AddedProducts { get; set; }
 
+        public virtual Guid SellerId { get; set; }
+
         public virtual Seller Seller { get; set; } = null!;
     }
 }
