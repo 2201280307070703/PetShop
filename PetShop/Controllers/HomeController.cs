@@ -2,17 +2,22 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using PetShop.Models;
+    using PetShop.Sevices.Data.Contracts;
     using System.Diagnostics;
     public class HomeController : Controller
     {
-
-        public HomeController()
+        private readonly IProductService productService;
+        public HomeController(IProductService productService)
         {
+            this.productService = productService;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var model = await this.productService.GetLastFiveProductsAsync();
+
+            return View(model);
         }
 
 
