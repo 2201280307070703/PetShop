@@ -3,7 +3,6 @@
     using Microsoft.Extensions.DependencyInjection;
     using PetShop.Sevices.Data;
     using PetShop.Sevices.Data.Contracts;
-    using System.Reflection;
 
     public static  class WebApplicationBuilderExtensions
     {
@@ -34,6 +33,7 @@
             //}
 
             services.AddScoped<IAnimalTypeService, AnimalTypeService>();
+
             services.AddScoped<ISellerService, SellerService>();
         }
     }
