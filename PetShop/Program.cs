@@ -3,6 +3,7 @@ namespace PetShop
     using Microsoft.EntityFrameworkCore;
     using PetShop.Data;
     using PetShop.Data.Models;
+    using PetShop.Sevices.Data.Contracts;
     using PetShop.Web.Infrastructure.Extensions;
 
     public class Program
@@ -30,7 +31,7 @@ namespace PetShop
             })
                 .AddEntityFrameworkStores<PetShopDbContext>();
 
-            builder.Services.AddApplicationServices();
+            builder.Services.AddApplicationServices(typeof(IProductService));
 
             builder.Services.AddControllersWithViews();
 
