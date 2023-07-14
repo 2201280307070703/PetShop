@@ -1,9 +1,9 @@
 namespace PetShop
 {
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using PetShop.Data;
     using PetShop.Data.Models;
+    using PetShop.Web.Infrastructure.Extensions;
 
     public class Program
     {
@@ -29,6 +29,9 @@ namespace PetShop
                     builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
             })
                 .AddEntityFrameworkStores<PetShopDbContext>();
+
+            builder.Services.AddApplicationServices();
+
             builder.Services.AddControllersWithViews();
 
             WebApplication app = builder.Build();

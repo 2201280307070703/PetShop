@@ -3,21 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33717.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetShop", "PetShop\PetShop.csproj", "{92546E20-12D8-4F04-B6C9-06DFF17502C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetShop", "PetShop\PetShop.csproj", "{92546E20-12D8-4F04-B6C9-06DFF17502C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetShop.Common", "PetShop.Common\PetShop.Common.csproj", "{F010F30C-A5C6-4C68-B4EB-15D828C5C4D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetShop.Common", "PetShop.Common\PetShop.Common.csproj", "{F010F30C-A5C6-4C68-B4EB-15D828C5C4D4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{D8A01992-6571-4204-8C0D-DF44BFD3B994}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{3BC83062-3867-4A3D-9D90-9E3D7918109F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetShop.Data", "PetShop.Data\PetShop.Data.csproj", "{116E7888-46B9-4F48-A010-12BF2559A672}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetShop.Data", "PetShop.Data\PetShop.Data.csproj", "{116E7888-46B9-4F48-A010-12BF2559A672}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetShop.Web.ViewModels", "PetShop.Web.ViewModels\PetShop.Web.ViewModels.csproj", "{A7832DC5-B2EA-4299-B3B8-A0BC80AAC83C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetShop.Web.ViewModels", "PetShop.Web.ViewModels\PetShop.Web.ViewModels.csproj", "{A7832DC5-B2EA-4299-B3B8-A0BC80AAC83C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{100AF818-A11B-4E92-8F01-03DC44F44FD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetShop.Data.Models", "PetShop.Data.Models\PetShop.Data.Models.csproj", "{B0C78998-8B9A-44A4-8B46-446D90EF708D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetShop.Data.Models", "PetShop.Data.Models\PetShop.Data.Models.csproj", "{B0C78998-8B9A-44A4-8B46-446D90EF708D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetShop.Sevices.Data", "PetShop.Sevices.Data\PetShop.Sevices.Data.csproj", "{DC15607F-3564-4227-B0B1-D65E4BB5FC8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetShop.Web.Infrastructure", "PetShop.Web.Infrastructure\PetShop.Web.Infrastructure.csproj", "{597AAFB8-5CAA-4A52-8357-983C33C0E74F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,14 @@ Global
 		{B0C78998-8B9A-44A4-8B46-446D90EF708D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0C78998-8B9A-44A4-8B46-446D90EF708D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0C78998-8B9A-44A4-8B46-446D90EF708D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC15607F-3564-4227-B0B1-D65E4BB5FC8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC15607F-3564-4227-B0B1-D65E4BB5FC8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC15607F-3564-4227-B0B1-D65E4BB5FC8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC15607F-3564-4227-B0B1-D65E4BB5FC8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{597AAFB8-5CAA-4A52-8357-983C33C0E74F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{597AAFB8-5CAA-4A52-8357-983C33C0E74F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{597AAFB8-5CAA-4A52-8357-983C33C0E74F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{597AAFB8-5CAA-4A52-8357-983C33C0E74F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,6 +66,8 @@ Global
 		{116E7888-46B9-4F48-A010-12BF2559A672} = {3BC83062-3867-4A3D-9D90-9E3D7918109F}
 		{A7832DC5-B2EA-4299-B3B8-A0BC80AAC83C} = {D8A01992-6571-4204-8C0D-DF44BFD3B994}
 		{B0C78998-8B9A-44A4-8B46-446D90EF708D} = {3BC83062-3867-4A3D-9D90-9E3D7918109F}
+		{DC15607F-3564-4227-B0B1-D65E4BB5FC8B} = {100AF818-A11B-4E92-8F01-03DC44F44FD1}
+		{597AAFB8-5CAA-4A52-8357-983C33C0E74F} = {D8A01992-6571-4204-8C0D-DF44BFD3B994}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1F788871-D862-408D-8EC6-A0B1A6D83531}
