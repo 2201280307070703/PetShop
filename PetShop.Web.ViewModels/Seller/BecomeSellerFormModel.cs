@@ -5,12 +5,12 @@
     public class BecomeSellerFormModel
     {
         [Required]
-        [StringLength(FirstNameMaxLength, MinimumLength=FirstNameMinLength)]
+        [StringLength(FirstNameMaxLength, MinimumLength=FirstNameMinLength,ErrorMessage ="Your name shout be with length between {2} and {1} characters!")]
         [Display(Name ="First name")]
         public string FirstName { get; set; } = null!;
 
         [Required]
-        [StringLength(LastNameMaxLength, MinimumLength =LastNameMinLength)]
+        [StringLength(LastNameMaxLength, MinimumLength =LastNameMinLength,ErrorMessage = "Your name shout be with length between {2} and {1} characters!")]
         [Display(Name ="Last name")]
         public string LastName { get; set; } = null!;
 
