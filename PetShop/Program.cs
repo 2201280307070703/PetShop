@@ -5,6 +5,7 @@ namespace PetShop
     using PetShop.Data.Models;
     using PetShop.Sevices.Data.Contracts;
     using PetShop.Web.Infrastructure.Extensions;
+    using PetShop.Web.Infrastructure.ModelBinders;
 
     public class Program
     {
@@ -33,7 +34,12 @@ namespace PetShop
 
             builder.Services.AddApplicationServices(typeof(IProductService));
 
-            builder.Services.AddControllersWithViews();
+            builder.Services
+                .AddControllersWithViews()
+                .AddMvcOptions(options =>
+                {
+                    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+                });
 
             WebApplication app = builder.Build();
 

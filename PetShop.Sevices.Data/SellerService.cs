@@ -30,6 +30,18 @@
             await this.dbContext.SaveChangesAsync();
         }
 
+        public async Task<string?> GetSellerIdByUserIdAsync(string userId)
+        {
+            Seller? seller = await this.dbContext.Sellers.Where(s => s.UserId.ToString() == userId).FirstOrDefaultAsync();
+
+            if(seller == null)
+            {
+                return null;
+            }
+
+            return seller.Id.ToString();
+        }
+
         public async Task<bool> SellerExistByEmailAsync(string email)
         {
             return
@@ -49,6 +61,13 @@
             return
                 await dbContext.Sellers
                 .AnyAsync(s => s.UserId.ToString() == userId);
+        }
+
+        public async Task<bool> UserIsSellerByUserIdAsycn(string userId)
+        {
+            return await this.dbContext
+                .Sellers
+                .AnyAsync(s=>s.UserId.ToString() == userId);
         }
     }
 }
