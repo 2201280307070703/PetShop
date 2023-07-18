@@ -5,7 +5,7 @@
     using PetShop.Web.Infrastructure.Extensions;
     using PetShop.Web.ViewModels.Seller;
     using static PetShop.Common.NotificationMessagesConstants;
-    public class SellerController : Controller
+    public class SellerController : BaseController
     {
         private readonly ISellerService sellerService;
 
