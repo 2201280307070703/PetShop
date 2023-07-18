@@ -24,6 +24,7 @@
             this.ageTypeService= ageTypeService;
         }
 
+        [HttpGet]
        public async Task<IActionResult> Add()
         {
             bool isSeller = await this.sellerService
@@ -110,7 +111,8 @@
                 return View(formModel);
             }
 
-           
+            try
+            {
                 var sellerId = await this.sellerService.GetSellerIdByUserIdAsync(this.User.GetId()!);
 
                 var productId = await this.productService.CreateProductAndReturnIdAsync(formModel, sellerId!);
@@ -118,7 +120,18 @@
                 this.TempData[SuccessMessage] = "Product was added successfully!";
 
                 return this.RedirectToAction("Index", "Home");
-           
+
+            }catch (Exception)
+            {
+                this.ModelState.AddModelError("", "Unexpected error occure!");
+
+                formModel.Categories = await this.categoryService.GetAllCategoriesAsync();
+                formModel.AnimalTypes = await this.animalTypeService.GetAllAnimalTypesAsync();
+                formModel.AgeTypes = await this.ageTypeService.GetAllAgeTypesAsync();
+
+                return View(formModel);
+            }
+
         }
     }
 }

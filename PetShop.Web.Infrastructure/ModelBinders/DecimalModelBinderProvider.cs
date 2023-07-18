@@ -5,12 +5,13 @@
     {
         public IModelBinder GetBinder(ModelBinderProviderContext context)
         {
-            if(context == null)
+            if (context == null)
             {
                 throw new ArgumentNullException(nameof(context));
             }
 
-            if(context.Metadata.ModelType==typeof(decimal) || context.Metadata.ModelType == typeof(decimal?))
+            if (context.Metadata.ModelType == typeof(decimal) ||
+                context.Metadata.ModelType == typeof(decimal?))
             {
                 return new DecimalModelBinder();
             }

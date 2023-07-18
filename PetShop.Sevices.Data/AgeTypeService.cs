@@ -19,7 +19,7 @@
         public async Task<bool> AgeTypeExistByIdAsync(int id)
         {
             return await this.dbContext.AgeTypes
-                .AllAsync(at => at.Id == id);
+                .AnyAsync(at => at.Id == id);
         }
 
         public async Task<IEnumerable<HouseSelectAgeTypeFormModel>> GetAllAgeTypesAsync()
