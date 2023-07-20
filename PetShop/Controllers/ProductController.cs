@@ -123,7 +123,7 @@
 
             }catch (Exception)
             {
-                this.ModelState.AddModelError("", "Unexpected error occure!");
+                this.ModelState.AddModelError("", "Unexpected error occured!");
 
                 formModel.Categories = await this.categoryService.GetAllCategoriesAsync();
                 formModel.AnimalTypes = await this.animalTypeService.GetAllAnimalTypesAsync();
@@ -132,6 +132,64 @@
                 return View(formModel);
             }
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Mine()
+        {
+            List<ProductAllViewModel> products = new List<ProductAllViewModel>();
+
+            bool isSeller = await this.sellerService.SellerExistsByUserIdAsync(this.User.GetId()!);
+
+            try
+            {
+                if (isSeller)
+                {
+                    string? sellerId = await this.sellerService.GetSellerIdByUserIdAsync(this.User.GetId()!);
+
+                    products.AddRange(await this.productService.GetAllProductsBySellerIdAsync(sellerId!));
+                }
+                else
+                {
+                    products.AddRange(await this.productService.GetAllProductsByUserIdAsync(this.User.GetId()!));
+                }
+
+                return View(products);
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = "Unexpected error occured! Please try again.";
+
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(string productId)
+        {
+            bool productExist =
+                await this.productService.ProductExistByIdAsync(productId);
+
+            if (!productExist)
+            {
+                this.TempData[ErrorMessage] = "Provided product does not exist!";
+
+                return RedirectToAction("All", "Product");
+            }
+
+            try
+            {
+                var model =await this.productService
+                    .GetProductDetailsByIdAsync(productId);
+
+                return View(model);
+
+            }catch (Exception)
+            {
+                this.TempData[ErrorMessage] = "Unexpected error occured! Please try again.";
+
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

@@ -14,5 +14,6 @@
         Task<string?> GetSellerIdByUserIdAsync(string userId);
 
         Task<bool> UserIsSellerByUserIdAsycn(string userId);
+
     }
 }

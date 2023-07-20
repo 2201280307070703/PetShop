@@ -1,0 +1,18 @@
+﻿@model ProductAllViewModel
+
+<div class="col-md-4">
+    <div class="card mb-3">
+        <img class="card-img-top" src="@Model.ImageUrl" alt="House Image">
+        <div class="card-body text-center">
+            <h4>@Model.Name</h4>
+            <h6>Description: <b>@Model.Description</b></h6>
+            <h6>
+                Price for this product is:
+                <b>@String.Format("{0:f2}", Model.Price) BGN</b>
+            </h6>
+            <br />
+            <a asp-controller="Product" asp-action="Details" asp-route-id="@Model.Id"
+               class="btn btn-success">Details</a>
+        </div>
+    </div>
+</div>
