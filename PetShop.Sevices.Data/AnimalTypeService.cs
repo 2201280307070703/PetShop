@@ -2,6 +2,7 @@
 {
     using Microsoft.EntityFrameworkCore;
     using PetShop.Data;
+    using PetShop.Data.Models;
     using PetShop.Sevices.Data.Contracts;
     using PetShop.Web.ViewModels.AnimalType;
     using System.Collections.Generic;
@@ -31,6 +32,15 @@
                    Id=at.Id,
                    Name=at.Name
                 }).ToArrayAsync();
+        }
+
+        public async Task<int> GetAnimalTypeIdByAnimalNameAsync(string animalName)
+        {
+            AnimalType animalType
+                 = await this.dbContext.AnimalsTypes.Where(at => at.Name == animalName).FirstAsync();
+
+            return animalType.Id;
+
         }
     }
 }

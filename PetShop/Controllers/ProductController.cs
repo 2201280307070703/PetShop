@@ -167,29 +167,94 @@
         [HttpGet]
         public async Task<IActionResult> Details(string productId)
         {
-            bool productExist =
-                await this.productService.ProductExistByIdAsync(productId);
+            //bool productExist =
+            //    await this.productService.ProductExistByIdAsync(productId);
 
-            if (!productExist)
-            {
-                this.TempData[ErrorMessage] = "Provided product does not exist!";
+            //if (!productExist)
+            //{
+            //    this.TempData[ErrorMessage] = "Provided product does not exist!";
 
-                return RedirectToAction("All", "Product");
-            }
+            //    return RedirectToAction("All", "Product");
+            //}
 
-            try
-            {
-                var model =await this.productService
-                    .GetProductDetailsByIdAsync(productId);
+            //try
+            //{
+            //    var model =await this.productService
+            //        .GetProductDetailsByIdAsync(productId);
+
+            //    return View(model);
+
+            //}catch (Exception)
+            //{
+            //    this.TempData[ErrorMessage] = "Unexpected error occured! Please try again.";
+
+            //    return RedirectToAction("Index", "Home");
+            //}
+
+            var model = await this.productService
+                   .GetProductDetailsByIdAsync(productId);
 
                 return View(model);
+        }
 
-            }catch (Exception)
-            {
-                this.TempData[ErrorMessage] = "Unexpected error occured! Please try again.";
+        [HttpGet]
+        public async Task<IActionResult> CatProducts()
+        {
+            int AnimalTypeId =
+                await this.animalTypeService.GetAnimalTypeIdByAnimalNameAsync("Cat");
 
-                return RedirectToAction("Index", "Home");
-            }
+            var model=await this.productService
+                .GetAllProductsForCurrentAnimalTypeAsync(AnimalTypeId);
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DogProducts()
+        {
+            int AnimalTypeId =
+                await this.animalTypeService.GetAnimalTypeIdByAnimalNameAsync("Dog");
+
+            var model = await this.productService
+                .GetAllProductsForCurrentAnimalTypeAsync(AnimalTypeId);
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> BirdProducts()
+        {
+            int AnimalTypeId =
+                await this.animalTypeService.GetAnimalTypeIdByAnimalNameAsync("Bird");
+
+            var model = await this.productService
+                .GetAllProductsForCurrentAnimalTypeAsync(AnimalTypeId);
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> FishProducts()
+        {
+            int AnimalTypeId =
+                await this.animalTypeService.GetAnimalTypeIdByAnimalNameAsync("Fish");
+
+            var model = await this.productService
+                .GetAllProductsForCurrentAnimalTypeAsync(AnimalTypeId);
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> RodentProducts()
+        {
+            int AnimalTypeId =
+                await this.animalTypeService.GetAnimalTypeIdByAnimalNameAsync("Rodent");
+
+            var model = await this.productService
+                .GetAllProductsForCurrentAnimalTypeAsync(AnimalTypeId);
+
+            return View(model);
         }
     }
 }

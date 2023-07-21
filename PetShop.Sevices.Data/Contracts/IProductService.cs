@@ -14,5 +14,8 @@
         Task<bool> ProductExistByIdAsync(string productId);
 
         Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(string productId);
+
+        Task<IEnumerable<ProductAllViewModel>> GetAllProductsForCurrentAnimalTypeAsync(int animalTypeId);
+       
     }
 }
