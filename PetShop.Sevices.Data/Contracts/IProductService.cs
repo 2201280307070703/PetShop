@@ -20,5 +20,9 @@
         Task<ProductPredeleteViewModel> GetProductForDeleteByIdAsync(string id);
 
         Task DeleteProductByIdAsync(string productId);
+
+        Task<ProductFormModel> GetProductForEditByIdAsync(string productId);
+
+        Task EditProductByIdAsync(string productId, ProductFormModel model);
     }   
 }

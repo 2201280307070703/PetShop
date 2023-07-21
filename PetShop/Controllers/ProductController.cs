@@ -304,10 +304,10 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(string productId,ProductPredeleteViewModel model )
+        public async Task<IActionResult> Delete(string id,ProductPredeleteViewModel model )
         {
             bool productExist =
-               await this.productService.ProductExistByIdAsync(productId);
+               await this.productService.ProductExistByIdAsync(id);
 
             if (!productExist)
             {
@@ -327,7 +327,7 @@
             string? sellerId = await this.sellerService.GetSellerIdByUserIdAsync(this.User.GetId()!);
 
             bool isSellerOwner =
-                await this.sellerService.IsSellerOwnerOfTheProductByIdAsync(sellerId!, productId);
+                await this.sellerService.IsSellerOwnerOfTheProductByIdAsync(sellerId!, id);
 
             if (!isSellerOwner)
             {
@@ -337,7 +337,9 @@
 
             try
             {
-                await this.productService.DeleteProductByIdAsync(productId);
+                await this.productService.DeleteProductByIdAsync(id);
+
+                this.TempData[WarningMessage] = "You delete this product successfull!";
                 return RedirectToAction("Mine", "Product");
             }
             catch (Exception)
@@ -345,6 +347,107 @@
                 this.TempData[ErrorMessage] = "Unexpected error occured! Please try again.";
 
                 return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            bool productExist =
+              await this.productService.ProductExistByIdAsync(id);
+
+            if (!productExist)
+            {
+                this.TempData[ErrorMessage] = "This product do not exist!";
+                return RedirectToAction("All", "AnimalType");
+            }
+
+
+            bool isSeller = await this.sellerService.SellerExistsByUserIdAsync(this.User.GetId()!);
+
+            if (!isSeller)
+            {
+                this.TempData[ErrorMessage] = "You should be a seller if you want to edit some of the products!";
+                return RedirectToAction("Become", "Seller");
+            }
+
+            string? sellerId = await this.sellerService.GetSellerIdByUserIdAsync(this.User.GetId()!);
+
+            bool isSellerOwner =
+                await this.sellerService.IsSellerOwnerOfTheProductByIdAsync(sellerId!, id);
+
+            if (!isSellerOwner)
+            {
+                this.TempData[ErrorMessage] = "You should be a owner if you want to edit this product!";
+                return RedirectToAction("All", "AnimalType");
+            }
+
+            try
+            {
+                var model=await this.productService.GetProductForEditByIdAsync(id);
+
+                model.Categories = await this.categoryService.GetAllCategoriesAsync();
+                model.AnimalTypes = await this.animalTypeService.GetAllAnimalTypesAsync();
+                model.AgeTypes = await this.ageTypeService.GetAllAgeTypesAsync();
+
+                return View(model);
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = "Unexpected error occured! Please try again.";
+
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, ProductFormModel formModel)
+        {
+            bool productExist =
+              await this.productService.ProductExistByIdAsync(id);
+
+            if (!productExist)
+            {
+                this.TempData[ErrorMessage] = "This product do not exist!";
+                return RedirectToAction("All", "AnimalType");
+            }
+
+
+            bool isSeller = await this.sellerService.SellerExistsByUserIdAsync(this.User.GetId()!);
+
+            if (!isSeller)
+            {
+                this.TempData[ErrorMessage] = "You should be a seller if you want to edit some of the products!";
+                return RedirectToAction("Become", "Seller");
+            }
+
+            string? sellerId = await this.sellerService.GetSellerIdByUserIdAsync(this.User.GetId()!);
+
+            bool isSellerOwner =
+                await this.sellerService.IsSellerOwnerOfTheProductByIdAsync(sellerId!, id);
+
+            if (!isSellerOwner)
+            {
+                this.TempData[ErrorMessage] = "You should be a owner if you want to edit this product!";
+                return RedirectToAction("Mine", "Product");
+            }
+
+            try
+            {
+               await this.productService.EditProductByIdAsync(id, formModel);
+
+                this.TempData[SuccessMessage] = "You edit this product successfull!";
+                return RedirectToAction("Mine", "Product");
+            }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError(string.Empty, "Something went wrong, while trying to update your product! Please try again.");
+
+
+                formModel.Categories = await this.categoryService.GetAllCategoriesAsync();
+                formModel.AnimalTypes = await this.animalTypeService.GetAllAnimalTypesAsync();
+                formModel.AgeTypes = await this.ageTypeService.GetAllAgeTypesAsync();
+                return View(formModel);
             }
         }
     }

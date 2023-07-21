@@ -47,6 +47,21 @@
             await this.dbContext.SaveChangesAsync();
         }
 
+        public async Task EditProductByIdAsync(string productId, ProductFormModel model)
+        {
+             Product product = await this.dbContext.Products.Where(p => p.IsActive).FirstAsync(p => p.Id.ToString() == productId);
+
+            product.Name = model.Name;
+            product.Description = model.Description;
+            product.ImageUrl = model.ImageUrl;
+            product.Price = model.Price;
+            product.CategoryId = model.CategoryId;
+            product.AgeTypeId = model.AgeTypeId;
+            product.AnimalTypeId = model.AnimalTypeId;
+
+            await this.dbContext.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<ProductAllViewModel>> GetAllProductsBySellerIdAsync(string sellerId)
         {
             return await this.dbContext.Products
@@ -150,6 +165,24 @@
                 ImageUrl= product.ImageUrl,
                 Description = product.Description
             };
+        }
+
+        public async Task<ProductFormModel> GetProductForEditByIdAsync(string productId)
+        {
+            Product product=await this.dbContext.Products.Where(p=>p.IsActive)
+                .FirstAsync(p=>p.Id.ToString()==productId);
+
+            ProductFormModel model = new ProductFormModel
+            {
+                Name= product.Name,
+                Description= product.Description,
+                ImageUrl = product.ImageUrl,
+                CategoryId= product.CategoryId,
+                AgeTypeId= product.AgeTypeId,
+                AnimalTypeId= product.AnimalTypeId
+            };
+
+            return model;
         }
 
         public async Task<bool> ProductExistByIdAsync(string productId)
