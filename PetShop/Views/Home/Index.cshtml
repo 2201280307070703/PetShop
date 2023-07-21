@@ -8,7 +8,7 @@
     <div class="mt-4 p-5 bg-light">
         <h1 class="display-4">Welcome to the best pet shop!</h1>
         <p class="lead">
-            There are no products in our pet shop , so if you are seller why don't you add some?
+            There are no products in our pet shop, so if you are seller why don't you add some?
         </p>
         <hr class="my-4">
         <p class="lead">
@@ -32,19 +32,19 @@ btn-lg"
                      src="@house.ImageUrl" alt="@house.Name">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>
-                        <a class="btn btn-primary" asp-controller="Product" aspaction="Details"
+                        <a class="btn btn-primary" asp-controller="Product" asp-action="Details"
                            asp-route-id="@house.Id"> @house.Name</a>
                     </h5>
                 </div>
             </div>
         }
     </div>
- @*   <button class="carousel-control-prev" type="button" data-bstarget="#carouselExampleControls" data-bs-slide="prev">
+    <button class="carousel-control-prev" type="button" data-bstarget="#carouselExampleControls" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
     </button>
     <button class="carousel-control-next" type="button" data-bstarget="#carouselExampleControls" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
-    </button>*@
+    </button>
 </div>

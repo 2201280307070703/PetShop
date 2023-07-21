@@ -1,5 +1,6 @@
 ﻿namespace PetShop.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using PetShop.Sevices.Data.Contracts;
     using PetShop.Web.Infrastructure.Extensions;
@@ -165,36 +166,34 @@
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Details(string productId)
         {
-            //bool productExist =
-            //    await this.productService.ProductExistByIdAsync(productId);
+            bool productExist =
+                await this.productService.ProductExistByIdAsync(productId);
 
-            //if (!productExist)
-            //{
-            //    this.TempData[ErrorMessage] = "Provided product does not exist!";
+            if (!productExist)
+            {
+                this.TempData[ErrorMessage] = "Provided product does not exist!";
 
-            //    return RedirectToAction("All", "Product");
-            //}
+                return RedirectToAction("All", "AnimalType");
+            }
 
-            //try
-            //{
-            //    var model =await this.productService
-            //        .GetProductDetailsByIdAsync(productId);
-
-            //    return View(model);
-
-            //}catch (Exception)
-            //{
-            //    this.TempData[ErrorMessage] = "Unexpected error occured! Please try again.";
-
-            //    return RedirectToAction("Index", "Home");
-            //}
-
-            var model = await this.productService
-                   .GetProductDetailsByIdAsync(productId);
+            try
+            {
+                var model = await this.productService
+                    .GetProductDetailsByIdAsync(productId);
 
                 return View(model);
+
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = "Unexpected error occured! Please try again.";
+
+                return RedirectToAction("Index", "Home");
+            }
+
         }
 
         [HttpGet]

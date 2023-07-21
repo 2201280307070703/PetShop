@@ -123,12 +123,7 @@
 
         public async Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(string productId)
         {
-            Product product = await this.dbContext.Products
-                .Include(p => p.Category)
-                .Include(p => p.AgeType)
-                .Include(p => p.AnimalType)
-                .Include(p => p.Seller)
-                .Where(p => p.IsActive == true)
+            Product product = await this.dbContext.Products.Where(p => p.IsActive == true)
                 .FirstAsync(p => p.Id.ToString() == productId);
 
 
@@ -177,6 +172,7 @@
                 Name= product.Name,
                 Description= product.Description,
                 ImageUrl = product.ImageUrl,
+                Price = product.Price,
                 CategoryId= product.CategoryId,
                 AgeTypeId= product.AgeTypeId,
                 AnimalTypeId= product.AnimalTypeId
