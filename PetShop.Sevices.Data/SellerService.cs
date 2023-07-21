@@ -42,6 +42,14 @@
             return seller.Id.ToString();
         }
 
+        public async Task<bool> IsSellerOwnerOfTheProductByIdAsync(string sellerId, string productId)
+        {
+            Product product=await this.dbContext.Products.Where(p=>p.IsActive==true)
+                .FirstAsync(p=>p.Id.ToString()==productId);
+
+            return product.SellerId.ToString() == sellerId;
+        }
+
         public async Task<bool> SellerExistByEmailAsync(string email)
         {
             return

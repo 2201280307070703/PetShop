@@ -16,6 +16,9 @@
         Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(string productId);
 
         Task<IEnumerable<ProductAllViewModel>> GetAllProductsForCurrentAnimalTypeAsync(int animalTypeId);
-       
-    }
+
+        Task<ProductPredeleteViewModel> GetProductForDeleteByIdAsync(string id);
+
+        Task DeleteProductByIdAsync(string productId);
+    }   
 }

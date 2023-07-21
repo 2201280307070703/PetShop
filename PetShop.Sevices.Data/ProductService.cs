@@ -38,6 +38,15 @@
             return product.Id.ToString();
         }
 
+        public async Task DeleteProductByIdAsync(string productId)
+        {
+            Product product = await this.dbContext.Products.Where(p=>p.IsActive).FirstAsync(p => p.Id.ToString() == productId);
+
+            product.IsActive = false;
+
+            await this.dbContext.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<ProductAllViewModel>> GetAllProductsBySellerIdAsync(string sellerId)
         {
             return await this.dbContext.Products
@@ -130,6 +139,19 @@
 
         }
 
+        public async Task<ProductPredeleteViewModel> GetProductForDeleteByIdAsync(string id)
+        {
+            Product product=await this.dbContext.Products.Where(p=>p.IsActive==true)
+                .FirstAsync(p=>p.Id.ToString() == id);
+
+            return new ProductPredeleteViewModel
+            {
+                Name = product.Name,
+                ImageUrl= product.ImageUrl,
+                Description = product.Description
+            };
+        }
+
         public async Task<bool> ProductExistByIdAsync(string productId)
         {
             return await this.dbContext
@@ -137,3 +159,4 @@
         }
     }
 }
+ 

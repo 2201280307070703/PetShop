@@ -15,5 +15,7 @@
 
         Task<bool> UserIsSellerByUserIdAsycn(string userId);
 
+
+        Task<bool> IsSellerOwnerOfTheProductByIdAsync(string sellerId, string productId);
     }
 }
