@@ -51,5 +51,10 @@
             public const int EmailMinLength = 3;
             public const int EmailMaxLength = 254;
         }
+        public static class User
+        {
+            public const int PasswordMinLength = 6;
+            public const int PasswordMaxLength = 60;
+        }
     }
 }   
