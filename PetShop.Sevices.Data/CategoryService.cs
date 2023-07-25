@@ -29,5 +29,10 @@
                     Name = c.Name
                 }).ToArrayAsync();
         }
+
+        public async Task<IEnumerable<string>> GetAllCategoryNamesAsync()
+        {
+            return await this.dbContext.Categories.Select(c=>c.Name).ToArrayAsync();
+        }
     }
 }

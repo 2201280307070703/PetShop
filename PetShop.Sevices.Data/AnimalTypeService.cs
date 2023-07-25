@@ -23,6 +23,11 @@
                 .AnyAsync(at => at.Id == id);
         }
 
+        public async Task<IEnumerable<string>> GetAllAnimalTypeNamesAsync()
+        {
+            return await this.dbContext.AnimalsTypes.Select(at => at.Name).ToArrayAsync();
+        }
+
         public async Task<IEnumerable<HouseSelectAnimalTypeFormModel>> GetAllAnimalTypesAsync()
         {
             return await this.dbContext.AnimalsTypes

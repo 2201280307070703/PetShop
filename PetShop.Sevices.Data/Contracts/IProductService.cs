@@ -1,5 +1,6 @@
 ﻿namespace PetShop.Sevices.Data.Contracts
 {
+    using PetShop.Services.Data.Models.Product;
     using PetShop.Web.ViewModels.Product;
     public interface IProductService
     {
@@ -24,5 +25,7 @@
         Task<ProductFormModel> GetProductForEditByIdAsync(string productId);
 
         Task EditProductByIdAsync(string productId, ProductFormModel model);
+
+        Task<AllProductsFilteredAndPagedServiceModel> SearchProductsAsync(AllProductsQueryModel query); 
     }   
 }

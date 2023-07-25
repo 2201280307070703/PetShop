@@ -1,7 +1,6 @@
 ﻿namespace PetShop.Sevices.Data.Contracts
 {
     using PetShop.Web.ViewModels.AnimalType;
-    using PetShop.Web.ViewModels.Product;
 
     public interface IAnimalTypeService
     {
@@ -11,5 +10,7 @@
 
 
         Task<int> GetAnimalTypeIdByAnimalNameAsync(string animalName);
+
+        Task<IEnumerable<string>> GetAllAnimalTypeNamesAsync();
     }
 }

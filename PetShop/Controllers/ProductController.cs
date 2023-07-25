@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using PetShop.Services.Data.Models.Product;
     using PetShop.Sevices.Data.Contracts;
     using PetShop.Web.Infrastructure.Extensions;
     using PetShop.Web.ViewModels.Product;
@@ -448,6 +449,21 @@
                 formModel.AgeTypes = await this.ageTypeService.GetAllAgeTypesAsync();
                 return View(formModel);
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Search([FromQuery] AllProductsQueryModel queryModel)
+        {
+            AllProductsFilteredAndPagedServiceModel serviceModel=
+                await this.productService.SearchProductsAsync(queryModel);
+
+            queryModel.Products = serviceModel.Products;
+            queryModel.TotalProducts = serviceModel.TotalProductsCount;
+            queryModel.Categories = await categoryService.GetAllCategoryNamesAsync();
+            queryModel.AnimalTypes = await animalTypeService.GetAllAnimalTypeNamesAsync();
+            queryModel.AgeTypes = await ageTypeService.GetAllAgeTypeNamesAsync();
+
+            return View(queryModel);
         }
     }
 }

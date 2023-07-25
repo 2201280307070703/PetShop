@@ -6,5 +6,7 @@
         Task<IEnumerable<HouseSelectCategoryFormModel>> GetAllCategoriesAsync();
 
         Task<bool> CategoryExistByIdAsync(int id);
+
+        Task<IEnumerable<string>> GetAllCategoryNamesAsync();
     }
 }

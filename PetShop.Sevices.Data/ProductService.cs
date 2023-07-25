@@ -3,8 +3,10 @@
     using Microsoft.EntityFrameworkCore;
     using PetShop.Data;
     using PetShop.Data.Models;
+    using PetShop.Services.Data.Models.Product;
     using PetShop.Sevices.Data.Contracts;
     using PetShop.Web.ViewModels.Product;
+    using PetShop.Web.ViewModels.Product.Enums;
     using PetShop.Web.ViewModels.Seller;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -185,6 +187,72 @@
         {
             return await this.dbContext
                 .Products.AnyAsync(p => p.Id.ToString() == productId);
+        }
+
+        public async Task<AllProductsFilteredAndPagedServiceModel> SearchProductsAsync(AllProductsQueryModel query)
+        {
+            IQueryable<Product> productsQuery = dbContext.Products.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(query.Category))
+            {
+                productsQuery = productsQuery.Where(p => p.Category.Name == query.Category);
+            }
+
+            if (!string.IsNullOrWhiteSpace(query.AnimalType))
+            {
+                productsQuery=productsQuery.Where(p=>p.AnimalType.Name == query.AnimalType);
+            }
+
+            if (!string.IsNullOrWhiteSpace(query.AgeType))
+            {
+                productsQuery=productsQuery.Where(p=>p.AgeType.TypeOfAge==query.AgeType);
+            }
+
+            if (!string.IsNullOrWhiteSpace(query.SearchString))
+            {
+                string wildCard = $"%{query.SearchString.ToLower()}%";
+
+                productsQuery = productsQuery
+                    .Where(p => EF.Functions.Like(p.Name, wildCard) ||
+                     EF.Functions.Like(p.Description, wildCard));
+            }
+
+
+            productsQuery = query.ProductSorting switch
+            {
+                ProductSorting.Newest => productsQuery
+                .OrderByDescending(p => p.CreatedOn),
+                ProductSorting.Oldest => productsQuery
+                .OrderBy(p => p.CreatedOn),
+                ProductSorting.PriceAscending => productsQuery
+                .OrderBy(p => p.Price),
+                ProductSorting.PriceDescending => productsQuery
+                .OrderByDescending(p => p.Price),
+                _ => productsQuery.OrderBy(p => p.Name)
+
+            };
+
+
+            IEnumerable<ProductAllViewModel> allProducts = await productsQuery
+                .Where(p => p.IsActive)
+                .Skip((query.CurrentPage - 1) * query.ProductsPerPage)
+                .Take(query.ProductsPerPage)
+                .Select(p => new ProductAllViewModel
+                {
+                    Id=p.Id.ToString(),
+                    Name=p.Name,
+                    Description=p.Description,
+                    Price=p.Price,
+                    ImageUrl=p.ImageUrl,
+                }).ToArrayAsync();
+
+            int totalProducts=productsQuery.Count();
+
+            return new AllProductsFilteredAndPagedServiceModel()
+            {
+                TotalProductsCount = totalProducts,
+                Products = allProducts
+            };
         }
     }
 }

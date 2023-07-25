@@ -22,6 +22,11 @@
                 .AnyAsync(at => at.Id == id);
         }
 
+        public async Task<IEnumerable<string>> GetAllAgeTypeNamesAsync()
+        {
+            return await this.dbContext.AgeTypes.Select(at => at.TypeOfAge).ToArrayAsync();
+        }
+
         public async Task<IEnumerable<HouseSelectAgeTypeFormModel>> GetAllAgeTypesAsync()
         {
             return await this.dbContext

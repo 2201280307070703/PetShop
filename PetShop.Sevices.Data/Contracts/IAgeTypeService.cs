@@ -6,5 +6,7 @@
         Task<IEnumerable<HouseSelectAgeTypeFormModel>> GetAllAgeTypesAsync();
 
         Task<bool> AgeTypeExistByIdAsync(int id);
+
+        Task<IEnumerable<string>> GetAllAgeTypeNamesAsync();
     }
 }
