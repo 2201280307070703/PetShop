@@ -1,6 +1,7 @@
 ﻿namespace PetShop.Controllers
 {
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Components;
     using Microsoft.AspNetCore.Mvc;
     using PetShop.Services.Data.Models.Product;
     using PetShop.Sevices.Data.Contracts;
@@ -15,15 +16,17 @@
         private readonly ICategoryService categoryService;
         private readonly IAnimalTypeService animalTypeService;
         private readonly IAgeTypeService ageTypeService;
+        private readonly IUserService userService;
 
         public ProductController(IProductService productService, ISellerService sellerService
-            , ICategoryService categoryService, IAnimalTypeService animalTypeService, IAgeTypeService ageTypeService)
+            , ICategoryService categoryService, IAnimalTypeService animalTypeService, IAgeTypeService ageTypeService, IUserService userService)
         {
             this.productService = productService;
             this.sellerService = sellerService;
             this.categoryService = categoryService;
             this.animalTypeService = animalTypeService;
             this.ageTypeService= ageTypeService;
+            this.userService = userService;
         }
 
         [HttpGet]
@@ -464,6 +467,94 @@
             queryModel.AgeTypes = await ageTypeService.GetAllAgeTypeNamesAsync();
 
             return View(queryModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Buy(string id)
+        {
+            bool productExist =
+               await this.productService.ProductExistByIdAsync(id);
+
+            if (!productExist)
+            {
+                this.TempData[ErrorMessage] = "This product do not exist!";
+                return RedirectToAction("All", "AnimalType");
+            }
+
+            bool userAlreadyHaveThisProduct = await this.userService.UserHaveThisProductAlreadyByIdAsync(this.User.GetId()!, id);
+
+            if (userAlreadyHaveThisProduct)
+            {
+                this.TempData[ErrorMessage] = "You already have this product. Please choose something else!";
+                return RedirectToAction("Product", "Search");
+            }
+
+            try
+            {
+                var model = await this.productService.GetProductToBuyByIdAsync(id);
+
+                return View(model);
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = "Unexpected error occured! Please try again.";
+
+                return RedirectToAction("Index", "Home");
+            }
+
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Buy(string id, ProductBuyViewModel model)
+        {
+            bool productExist =
+                await this.productService.ProductExistByIdAsync(id);
+
+            if (!productExist)
+            {
+                this.TempData[ErrorMessage] = "This product do not exist!";
+                return RedirectToAction("All", "AnimalType");
+            }
+
+            bool userAlreadyHaveThisProduct = await this.userService.UserHaveThisProductAlreadyByIdAsync(this.User.GetId()!, id);
+
+            if (userAlreadyHaveThisProduct)
+            {
+                this.TempData[ErrorMessage] = "You already have this product. Please choose something else!";
+                return RedirectToAction("Product", "Search");
+            }
+
+            try
+            {
+                await this.productService.BuyProductByIdAsync(id, this.User.GetId()!);
+
+                this.TempData[SuccessMessage] = "You buy this product successfully!";
+
+                return RedirectToAction("MyCart", "Product");
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = "Unexpected error occured! Please try again.";
+
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpGet] 
+        public async Task<IActionResult> MyCart()
+        {
+            try
+            {
+                var model=  await this.userService.GetAllBuyedProductsByIAsync(this.User.GetId()!);
+                return View(model);
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = "Unexpected error occured! Please try again.";
+
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

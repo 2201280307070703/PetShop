@@ -20,6 +20,17 @@
             this.dbContext = dbContext;
         }
 
+        public async Task BuyProductByIdAsync(string productId, string userId)
+        {
+           Product product = await this.dbContext.Products.Where(p=>p.IsActive).FirstAsync(p=>p.Id.ToString()==productId);
+           ApplicationUser user = await this.dbContext.Users.FirstAsync(u => u.Id.ToString() == userId);
+           user.AddedProducts.Add(product);
+           product.IsActive = false;
+
+            await this.dbContext.SaveChangesAsync();
+
+        }
+
         public async Task<string> CreateProductAndReturnIdAsync(ProductFormModel formModel, string sellerId)
         {
             Product product=new Product()
@@ -183,6 +194,19 @@
             return model;
         }
 
+        public async Task<ProductBuyViewModel> GetProductToBuyByIdAsync(string productId)
+        {
+            Product product= await this.dbContext.Products.Where(p=>p.IsActive).FirstAsync(p=>p.Id.ToString()==productId);
+
+            return new ProductBuyViewModel
+            {
+                Name=product.Name,
+                ImageUrl= product.ImageUrl,
+                Price = product.Price,
+                Description= product.Description
+            };
+        }
+
         public async Task<bool> ProductExistByIdAsync(string productId)
         {
             return await this.dbContext
@@ -254,6 +278,7 @@
                 Products = allProducts
             };
         }
+
     }
 }
  

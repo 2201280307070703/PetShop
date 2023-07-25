@@ -26,6 +26,10 @@
 
         Task EditProductByIdAsync(string productId, ProductFormModel model);
 
-        Task<AllProductsFilteredAndPagedServiceModel> SearchProductsAsync(AllProductsQueryModel query); 
+        Task<AllProductsFilteredAndPagedServiceModel> SearchProductsAsync(AllProductsQueryModel query);
+        
+        Task<ProductBuyViewModel> GetProductToBuyByIdAsync(string productId);
+
+        Task BuyProductByIdAsync(string productId, string userId);
     }   
 }

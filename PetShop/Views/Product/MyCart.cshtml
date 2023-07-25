@@ -1,0 +1,35 @@
+﻿@model IEnumerable<ProductAllViewModel>
+
+@{
+    ViewData["Title"] = "Buyed Products";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+@if (!Model.Any())
+{
+    <h2 class="text-center">You do not have any products yet!</h2>
+}
+else
+{
+    <div class="row">
+        @foreach (ProductAllViewModel product in Model)
+        {
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <img class="card-img-top" src="@product.ImageUrl" alt="Product Image">
+                    <div class="card-body text-center">
+                        <h4>@product.Name</h4>
+                        <h6>Description: <b>@product.Description</b></h6>
+                        <h6>
+                            Price for this product is:
+                            <b>@String.Format("{0:f2}", product.Price) BGN</b>
+                        </h6>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
