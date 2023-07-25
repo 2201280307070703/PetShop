@@ -1,4 +1,10 @@
 ﻿@model ProductAllViewModel
+@using PetShop.Sevices.Data.Contracts
+@using PetShop.Web.Infrastructure.Extensions
+@inject ISellerService SellerService
+@{
+    bool isSeller = await SellerService.SellerExistsByUserIdAsync(User.GetId());
+}
 
 <div class="col-md-4">
     <div class="card mb-3">
@@ -13,8 +19,11 @@
             <br />
             <a asp-controller="Product" asp-action="Details" asp-route-id="@Model.Id"
                class="btn btn-info btn-success">Details</a>
-            <a asp-controller="Product" asp-action="Buy" asp-route-id="@Model.Id"
-               class="btn btn-success">Buy</a>
+            @if (!isSeller)
+            {
+                <a asp-controller="Product" asp-action="Buy" asp-route-id="@Model.Id"
+                   class="btn btn-success">Buy</a>
+            }
             <a asp-controller="Product" asp-action="Delete" asp-route-id="@Model.Id"
                class="btn btn-danger">Delete</a>
             <a asp-controller="Product" asp-action="Edit" asp-route-id="@Model.Id"

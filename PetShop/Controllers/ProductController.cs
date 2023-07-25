@@ -153,10 +153,14 @@
                     string? sellerId = await this.sellerService.GetSellerIdByUserIdAsync(this.User.GetId()!);
 
                     products.AddRange(await this.productService.GetAllProductsBySellerIdAsync(sellerId!));
+
+                    return View(products);
                 }
                 else
                 {
-                    products.AddRange(await this.productService.GetAllProductsByUserIdAsync(this.User.GetId()!));
+                    this.TempData[ErrorMessage] = "You should be a seller if you want to see your products!";
+
+                    return RedirectToAction("Become", "Seller");
                 }
 
                 return View(products);

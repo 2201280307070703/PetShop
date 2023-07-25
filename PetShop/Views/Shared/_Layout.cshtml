@@ -1,4 +1,12 @@
 ﻿@using static PetShop.Common.GeneralApplicationConstants
+@using PetShop.Sevices.Data.Contracts
+@using PetShop.Web.Infrastructure.Extensions
+
+@inject ISellerService SellerService
+@{
+    bool isSeller = await SellerService.SellerExistsByUserIdAsync(User.GetId());
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,21 +34,25 @@
                     <ul class="navbar-nav flex-grow-1">
                         @if(this.User.Identity?.IsAuthenticated ?? false)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Mine">My Products</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Add">Add Product</a>
-                            </li>
+                            @if(isSeller){
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Mine">My Products</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Add">Add Product</a>
+                                </li>
+                            }
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="AnimalType" asp-action="All">All Product</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Search">Search Product</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="MyCart">My Cart</a>
-                            </li>
+                            @if(!isSeller){
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="MyCart">My Cart</a>
+                                </li>
+                            }
                         }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
