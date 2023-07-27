@@ -1,4 +1,12 @@
 ﻿@model IEnumerable<ProductIndexViewModel>
+@using PetShop.Sevices.Data.Contracts
+@using PetShop.Web.Infrastructure.Extensions
+
+@inject ISellerService SellerService
+@{
+    bool isSeller = await SellerService.SellerExistsByUserIdAsync(User.GetId());
+}
+
 @{
     ViewData["Title"] = "Home Page";
     var houses = Model.ToList();
@@ -12,10 +20,9 @@
         </p>
         <hr class="my-4">
         <p class="lead">
-            @if (User.Identity?.IsAuthenticated ?? false)
+            @if (User.Identity?.IsAuthenticated ?? false && isSeller)
             {
-                <a asp-controller="Product" asp-action="Add" class="btn btn-primary
-btn-lg"
+                <a asp-controller="Product" asp-action="Add" class="btn btn-primary btn-lg"
                    role="button">Add Product</a>
             }
         </p>
