@@ -1,9 +1,7 @@
 ﻿namespace PetShop.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using PetShop.Models;
     using PetShop.Sevices.Data.Contracts;
-    using System.Diagnostics;
     public class HomeController : Controller
     {
         private readonly IProductService productService;
@@ -22,9 +20,14 @@
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Error(int statusCode)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            if(statusCode==404 || statusCode == 400)
+            {
+                return View("Error404");
+            }
+
+            return View();
         }
     }
 }
