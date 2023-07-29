@@ -43,6 +43,8 @@ namespace PetShop
                     options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
                 });
 
+            builder.Services.AddResponseCaching();
+
             WebApplication app = builder.Build();
 
             if (app.Environment.IsDevelopment())
@@ -68,6 +70,8 @@ namespace PetShop
 
             app.MapDefaultControllerRoute();
             app.MapRazorPages();
+
+            app.UseResponseCaching();
 
             app.Run();
         }
