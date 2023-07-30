@@ -4,6 +4,8 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using PetShop.Data.Models;
+    using PetShop.Sevices.Data.Contracts;
+    using PetShop.Web.Infrastructure.Extensions;
     using PetShop.Web.ViewModels.User;
     using static PetShop.Common.NotificationMessagesConstants;
 
@@ -11,12 +13,15 @@
     {
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IUserService userService;
 
         public UserController(SignInManager<ApplicationUser> signInManager,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager
+            ,IUserService userService)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
+            this.userService = userService;
         }
 
        [HttpGet]
@@ -86,6 +91,20 @@
             }
 
             return Redirect(model.ReturnUrl ?? "/Home/Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+            if (!this.User.Identity?.IsAuthenticated ?? false)
+            {
+                this.TempData[ErrorMessage] = "You should Log In if you want to access your profile!";
+                return RedirectToAction("Login", "User");
+            }
+
+            var model = await this.userService.GetInformationForUserByIdAsync(this.User.GetId()!);
+
+            return View(model);
         }
     }
 }

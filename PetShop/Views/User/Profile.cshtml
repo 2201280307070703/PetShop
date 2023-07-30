@@ -1,0 +1,30 @@
+﻿@using PetShop.Sevices.Data.Contracts;
+@using PetShop.Web.Infrastructure.Extensions
+@model UserProfileViewModel
+@inject ISellerService SellerService 
+
+@{
+    bool isSeller = await SellerService.SellerExistsByUserIdAsync(User.GetId()!);
+}
+
+
+@{
+    ViewBag.Title = "Your Profile";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="col-md-4 offset-md-4">
+      <div class="card" style="width: 32rem;">
+           <div class="card-body">
+                  <h5 class="card-title">Your Profile Information</h5>
+            @if (isSeller)
+               {
+                <p class="card-text">First Name: @Model.FirstName</p>
+                <p class="card-text">Last Name:  @Model.LastName</p>
+               }
+                <p class="card-text">Email:  @Model.Email</p>
+            </div>
+      </div>
+ </div>

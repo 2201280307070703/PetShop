@@ -3,7 +3,7 @@
 @using PetShop.Web.Infrastructure.Extensions
 @inject ISellerService SellerService
 @{
-    bool isSeller = await SellerService.SellerExistsByUserIdAsync(User.GetId());
+    bool isSeller = await SellerService.SellerExistsByUserIdAsync(User.GetId()!);
 }
 
 <div class="col-md-4">

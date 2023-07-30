@@ -5,15 +5,15 @@
 @inject UserManager<ApplicationUser> UserManager
 @inject ISellerService SellerService
 @{
-    bool isSeller = await SellerService.SellerExistsByUserIdAsync(User.GetId());
+    bool isSeller = await SellerService.SellerExistsByUserIdAsync(User.GetId()!);
 }
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-    </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Profile" title="Manage">Hello, @User.Identity!.Name!</a>
+            </li>
     @if(!isSeller)
         {
             <li class="nav-item">
