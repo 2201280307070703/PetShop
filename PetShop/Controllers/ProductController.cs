@@ -544,7 +544,7 @@
             }
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> CartRemove(string id)
         {
             bool productExist =
@@ -578,6 +578,7 @@
 
                 return RedirectToAction("Index", "Home");
             }
+
         }
         [HttpGet] 
         public async Task<IActionResult> MyCart()

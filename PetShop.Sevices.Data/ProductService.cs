@@ -9,6 +9,7 @@
     using PetShop.Web.ViewModels.Product.Enums;
     using PetShop.Web.ViewModels.Seller;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class ProductService : IProductService
@@ -217,7 +218,7 @@
 
         public async Task RemovingProductFromCardByIdAsync(string productId, string userId)
         {
-            Product product = await this.dbContext.Products.Where(p => p.IsActive).FirstAsync(p => p.Id.ToString() == productId);
+            Product product = await this.dbContext.Products.Where(p=>p.Id.ToString() == userId).FirstAsync();
             ApplicationUser user = await this.dbContext.Users.FirstAsync(u => u.Id.ToString() == userId);
             user.AddedProducts.Remove(product);
 
