@@ -80,7 +80,7 @@
                 return RedirectToAction("Index", "Home");
             }
 
-            return RedirectToAction("All", "Product");
+            return RedirectToAction("Search", "Product");
         }
     }
 }

@@ -1,5 +1,6 @@
 namespace PetShop
 {
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using PetShop.Data;
@@ -7,6 +8,7 @@ namespace PetShop
     using PetShop.Sevices.Data.Contracts;
     using PetShop.Web.Infrastructure.Extensions;
     using PetShop.Web.Infrastructure.ModelBinders;
+    using static PetShop.Common.GeneralApplicationConstants;
 
     public class Program
     {
@@ -31,6 +33,7 @@ namespace PetShop
                 options.Password.RequiredLength =
                     builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
             })
+                .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<PetShopDbContext>();
 
             builder.Services.AddApplicationServices(typeof(IProductService));
@@ -72,6 +75,8 @@ namespace PetShop
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.SeedAdministrator(AdminEmail);
 
             app.MapDefaultControllerRoute();
             app.MapRazorPages();
