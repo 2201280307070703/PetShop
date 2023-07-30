@@ -175,10 +175,10 @@
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Details(string productId)
+        public async Task<IActionResult> Details(string id)
         {
             bool productExist =
-                await this.productService.ProductExistByIdAsync(productId);
+                await this.productService.ProductExistByIdAsync(id);
 
             if (!productExist)
             {
@@ -190,7 +190,7 @@
             try
             {
                 var model = await this.productService
-                    .GetProductDetailsByIdAsync(productId);
+                    .GetProductDetailsByIdAsync(id);
 
                 return View(model);
 
@@ -490,7 +490,7 @@
             if (userAlreadyHaveThisProduct)
             {
                 this.TempData[ErrorMessage] = "You already have this product. Please choose something else!";
-                return RedirectToAction("Product", "Search");
+                return RedirectToAction("Search", "Product");
             }
 
             try
@@ -507,7 +507,6 @@
             }
 
         }
-
 
         [HttpPost]
         public async Task<IActionResult> Buy(string id, ProductBuyViewModel model)
@@ -526,7 +525,7 @@
             if (userAlreadyHaveThisProduct)
             {
                 this.TempData[ErrorMessage] = "You already have this product. Please choose something else!";
-                return RedirectToAction("Product", "Search");
+                return RedirectToAction("Search","Product");
             }
 
             try
@@ -545,6 +544,41 @@
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CartRemove(string id)
+        {
+            bool productExist =
+               await this.productService.ProductExistByIdAsync(id);
+
+            if (!productExist)
+            {
+                this.TempData[ErrorMessage] = "This product do not exist!";
+                return RedirectToAction("All", "AnimalType");
+            }
+
+            bool userAlreadyHaveThisProduct = await this.userService.UserHaveThisProductAlreadyByIdAsync(this.User.GetId()!, id);
+
+            if (!userAlreadyHaveThisProduct)
+            {
+                this.TempData[ErrorMessage] = "This product is not added to your cart";
+                return RedirectToAction("MyCart", "Product");
+            }
+
+            try
+            {
+                await this.productService.RemovingProductFromCardByIdAsync(id, this.User.GetId()!);
+
+                this.TempData[WarningMessage] = "You remove this product from your cart.";
+
+                return RedirectToAction("MyCart", "Product");
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = "Unexpected error occured! Please try again.";
+
+                return RedirectToAction("Index", "Home");
+            }
+        }
         [HttpGet] 
         public async Task<IActionResult> MyCart()
         {

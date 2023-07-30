@@ -25,7 +25,6 @@
            Product product = await this.dbContext.Products.Where(p=>p.IsActive).FirstAsync(p=>p.Id.ToString()==productId);
            ApplicationUser user = await this.dbContext.Users.FirstAsync(u => u.Id.ToString() == userId);
            user.AddedProducts.Add(product);
-           product.IsActive = false;
 
             await this.dbContext.SaveChangesAsync();
 
@@ -136,8 +135,10 @@
 
         public async Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(string productId)
         {
-            Product product = await this.dbContext.Products.Where(p => p.IsActive == true)
-                .FirstAsync(p => p.Id.ToString() == productId);
+            Product product = await this.dbContext.Products.Include(p=>p.Category).Include(p => p.AnimalType)
+                .Include(p => p.AgeType).Include(p => p.Seller)
+                .Where(p => p.IsActive == true && p.Id.ToString().ToUpper() == productId)
+                .FirstAsync();
 
 
             return new ProductDetailsViewModel
@@ -200,6 +201,7 @@
 
             return new ProductBuyViewModel
             {
+                Id=product.Id.ToString(),
                 Name=product.Name,
                 ImageUrl= product.ImageUrl,
                 Price = product.Price,
@@ -211,6 +213,15 @@
         {
             return await this.dbContext
                 .Products.AnyAsync(p => p.Id.ToString() == productId);
+        }
+
+        public async Task RemovingProductFromCardByIdAsync(string productId, string userId)
+        {
+            Product product = await this.dbContext.Products.Where(p => p.IsActive).FirstAsync(p => p.Id.ToString() == productId);
+            ApplicationUser user = await this.dbContext.Users.FirstAsync(u => u.Id.ToString() == userId);
+            user.AddedProducts.Remove(product);
+
+            await this.dbContext.SaveChangesAsync();
         }
 
         public async Task<AllProductsFilteredAndPagedServiceModel> SearchProductsAsync(AllProductsQueryModel query)

@@ -31,5 +31,7 @@
         Task<ProductBuyViewModel> GetProductToBuyByIdAsync(string productId);
 
         Task BuyProductByIdAsync(string productId, string userId);
+
+        Task RemovingProductFromCardByIdAsync(string productId, string userId);
     }   
 }

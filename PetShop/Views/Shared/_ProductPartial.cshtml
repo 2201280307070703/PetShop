@@ -24,10 +24,14 @@
                 <a asp-controller="Product" asp-action="Buy" asp-route-id="@Model.Id"
                    class="btn btn-success">Buy</a>
             }
-            <a asp-controller="Product" asp-action="Delete" asp-route-id="@Model.Id"
-               class="btn btn-danger">Delete</a>
-            <a asp-controller="Product" asp-action="Edit" asp-route-id="@Model.Id"
-               class="btn btn-warning">Edit</a>
+
+            @if (isSeller)
+            {
+                <a asp-controller="Product" asp-action="Delete" asp-route-id="@Model.Id"
+                   class="btn btn-danger">Delete</a>
+                <a asp-controller="Product" asp-action="Edit" asp-route-id="@Model.Id"
+                   class="btn btn-warning">Edit</a>
+            }
         </div>
     </div>
 </div>

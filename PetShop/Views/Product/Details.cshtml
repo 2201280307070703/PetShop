@@ -1,9 +1,13 @@
 ﻿@model ProductDetailsViewModel
+
+
 @{
-    ViewBag.Title = "House Details";
+    ViewBag.Title = "Product Details";
 }
+
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
+
 <div class="container" style="display:inline">
     <div class="row">
         <div class="col-4">
@@ -13,34 +17,22 @@
         <div class="card col-8 border-0">
             <p style="font-size:25px;"><u>@Model.Name</u></p>
             <p>
-                Price Per Month:
-                <b>@String.Format("{0:f2}", Model.Price) BGN</b>
+                Price:
+                <b>@($"{Model.Price:f2}") BGN</b>
             </p>
             <p>@Model.Description</p>
             <p>Category: <b>@Model.Category</b></p>
+            <p>Type Of Animal: <b>@Model.AnimalType</b></p>
+            <p>Age: <b>@Model.AgeType</b></p>
             <div class="form-inline">
-                @if (this.User.Identity?.IsAuthenticated ?? false)
-                {
-                    <a class="btn btn-warning" asp-controller="House" aspaction="Edit"
-                       asp-route-id="@Model.Id">Edit</a>
-                    <a class="ml-2 btn btn-danger" asp-controller="House" aspaction="Delete"
-                       asp-route-id="@Model.Id">Delete</a>
-                }
-                    else
-                    {
-                        <form class="ml-2" asp-controller="House" asp-action="Leave"
-                              asp-route-id="@Model.Id" method="post">
-                            <input class="btn btn-primary" type="submit"
-                                   value="Leave" />
-                        </form>
-                    }
-                }
             </div>
             <p></p>
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title">Agent Info</h5>
-                    <p class="card-text">Email: @Model.Seller.Email</p>
+                    <h5 class="card-title">Seller Info</h5>
+                    <p class="card-text">First Name: @Model.Seller.FirstName</p>
+                    <p class="card-text">Last Name:  @Model.Seller.LastName</p>
+                    <p class="card-text">Email:  @Model.Seller.Email</p>
                     <p class="card-text">Phone Number: @Model.Seller.PhoneNumber</p>
                 </div>
             </div>
