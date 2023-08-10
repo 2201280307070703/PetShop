@@ -7,15 +7,16 @@
         <div class="card-body text-center">
             <h4>@Model.Name</h4>
             <h6>Description: <b>@Model.Description</b></h6>
+            <h6>Description: <b>@Model.Id/b></h6>
             <h6>
                 Price for this product is:
                 <b>@String.Format("{0:f2}", Model.Price) BGN</b>
             </h6>
             <br />
+            <a asp-controller="Product" asp-action="Pay" asp-route-id="@Model.Id"
+               class="btn btn-success">Pay</a>
             <a asp-controller="Product" asp-action="CartRemove" asp-route-id="@Model.Id"
-               class="btn btn-success">Buy</a>
-            <a asp-controller="Product" asp-action="CartRemove" asp-route-id="@Model.Id"
-               class="btn btn-info btn-success">Remove</a>
+               class="btn btn-danger">Remove</a>
         </div>
     </div>
 </div>

@@ -24,6 +24,8 @@
         public async Task BuyProductByIdAsync(string productId, string userId)
         {
            Product product = await this.dbContext.Products.Where(p=>p.IsActive).FirstAsync(p=>p.Id.ToString()==productId);
+           product.IsActive = false;
+
            ApplicationUser user = await this.dbContext.Users.FirstAsync(u => u.Id.ToString() == userId);
            user.AddedProducts.Add(product);
 
@@ -196,18 +198,13 @@
             return model;
         }
 
-        public async Task<ProductBuyViewModel> GetProductToBuyByIdAsync(string productId)
+        public async Task PayProductByIdAsync(string productId, string userId)
         {
-            Product product= await this.dbContext.Products.Where(p=>p.IsActive).FirstAsync(p=>p.Id.ToString()==productId);
+            ApplicationUser user = await this.dbContext.Users.Where(u => u.Id.ToString() == userId).FirstAsync();
+            Product product = await this.dbContext.Products.FirstAsync(p => p.Id.ToString() == productId);
 
-            return new ProductBuyViewModel
-            {
-                Id=product.Id.ToString(),
-                Name=product.Name,
-                ImageUrl= product.ImageUrl,
-                Price = product.Price,
-                Description= product.Description
-            };
+            user.AddedProducts.Remove(product);
+            await this.dbContext.SaveChangesAsync();
         }
 
         public async Task<bool> ProductExistByIdAsync(string productId)
@@ -216,12 +213,13 @@
                 .Products.AnyAsync(p => p.Id.ToString() == productId);
         }
 
-        public async Task RemovingProductFromCardByIdAsync(string productId, string userId)
+        public async Task RemoveProductFromCartByIdAsync(string productId, string userId)
         {
-            Product product = await this.dbContext.Products.Where(p=>p.Id.ToString() == userId).FirstAsync();
-            ApplicationUser user = await this.dbContext.Users.FirstAsync(u => u.Id.ToString() == userId);
-            user.AddedProducts.Remove(product);
+            ApplicationUser user = await this.dbContext.Users.Where(u => u.Id.ToString() == userId).FirstAsync();
+            Product product = await this.dbContext.Products.FirstAsync(p => p.Id.ToString() == productId);
 
+            user.AddedProducts.Remove(product);
+            product.IsActive= true;
             await this.dbContext.SaveChangesAsync();
         }
 

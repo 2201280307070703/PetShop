@@ -28,10 +28,11 @@
 
         Task<AllProductsFilteredAndPagedServiceModel> SearchProductsAsync(AllProductsQueryModel query);
         
-        Task<ProductBuyViewModel> GetProductToBuyByIdAsync(string productId);
-
         Task BuyProductByIdAsync(string productId, string userId);
 
-        Task RemovingProductFromCardByIdAsync(string productId, string userId);
+        Task PayProductByIdAsync(string productId, string userId);
+
+        Task RemoveProductFromCartByIdAsync(string productId, string userId);
+
     }   
 }

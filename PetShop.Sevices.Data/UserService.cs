@@ -24,6 +24,7 @@
         {
             return await this.dbContext.Products.Where(p => p.UserId.ToString() == userId).Select(p => new ProductAllViewModel
             {
+                Id=p.Id.ToString(),
                 Name = p.Name,
                 Description = p.Description,
                 ImageUrl = p.ImageUrl,
