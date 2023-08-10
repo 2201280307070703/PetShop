@@ -1,7 +1,6 @@
 ﻿namespace PetShop.Controllers
 {
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Components;
     using Microsoft.AspNetCore.Mvc;
     using PetShop.Services.Data.Models.Product;
     using PetShop.Sevices.Data.Contracts;
@@ -35,9 +34,9 @@
             bool isSeller = await this.sellerService
                 .UserIsSellerByUserIdAsycn(this.User.GetId()!);
 
-            if (!isSeller)
+            if (!isSeller && !User.IsUserAdmin())
             {
-                this.TempData[ErrorMessage] = "You shold be a seller if you want to add products!";
+                this.TempData[ErrorMessage] = "You shold be a seller or administrator if you want to add products!";
                 return RedirectToAction("Become", "Seller");
             }
 
@@ -62,11 +61,12 @@
             bool isSeller = await this.sellerService
                .UserIsSellerByUserIdAsycn(this.User.GetId()!);
 
-            if (!isSeller)
+            if (!isSeller && !User.IsUserAdmin())
             {
-                this.TempData[ErrorMessage] = "You shold be a seller if you want to add products!";
+                this.TempData[ErrorMessage] = "You shold be a seller or administrator if you want to add products!";
                 return RedirectToAction("Become", "Seller");
-            }
+            } 
+
             bool categoryExist =
                await this.categoryService.CategoryExistByIdAsync(formModel.CategoryId);
 
@@ -163,7 +163,6 @@
                     return RedirectToAction("Become", "Seller");
                 }
 
-                return View(products);
             }
             catch (Exception)
             {
@@ -372,9 +371,9 @@
 
             bool isSeller = await this.sellerService.SellerExistsByUserIdAsync(this.User.GetId()!);
 
-            if (!isSeller)
+            if (!isSeller && !User.IsUserAdmin())
             {
-                this.TempData[ErrorMessage] = "You should be a seller if you want to edit some of the products!";
+                this.TempData[ErrorMessage] = "You should be a seller or administrator if you want to edit some of the products!";
                 return RedirectToAction("Become", "Seller");
             }
 
@@ -383,9 +382,9 @@
             bool isSellerOwner =
                 await this.sellerService.IsSellerOwnerOfTheProductByIdAsync(sellerId!, id);
 
-            if (!isSellerOwner)
+            if (!isSellerOwner && !User.IsUserAdmin())
             {
-                this.TempData[ErrorMessage] = "You should be a owner if you want to edit this product!";
+                this.TempData[ErrorMessage] = "You should be a owner or administrator if you want to edit this product!";
                 return RedirectToAction("All", "AnimalType");
             }
 
@@ -422,9 +421,9 @@
 
             bool isSeller = await this.sellerService.SellerExistsByUserIdAsync(this.User.GetId()!);
 
-            if (!isSeller)
+            if (!isSeller && !User.IsUserAdmin())
             {
-                this.TempData[ErrorMessage] = "You should be a seller if you want to edit some of the products!";
+                this.TempData[ErrorMessage] = "You should be a seller or administrator if you want to edit some of the products!";
                 return RedirectToAction("Become", "Seller");
             }
 
@@ -433,10 +432,10 @@
             bool isSellerOwner =
                 await this.sellerService.IsSellerOwnerOfTheProductByIdAsync(sellerId!, id);
 
-            if (!isSellerOwner)
+            if (!isSellerOwner && !User.IsUserAdmin())
             {
-                this.TempData[ErrorMessage] = "You should be a owner if you want to edit this product!";
-                return RedirectToAction("Mine", "Product");
+                this.TempData[ErrorMessage] = "You should be a owner or administrator if you want to edit this product!";
+                return RedirectToAction("All", "AnimalType");
             }
 
             try
