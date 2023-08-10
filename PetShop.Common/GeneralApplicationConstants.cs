@@ -6,5 +6,6 @@
 
         public const string AdminRoleName = "Administrator";
         public const string AdminEmail = "administrator@admin.petshop";
+        public const string AdminAreaName = "Admin";
     }
 }
