@@ -29,7 +29,7 @@
             {
                 <a asp-controller="Product" asp-action="Delete" asp-route-id="@Model.Id"
                 class="btn btn-danger">Delete</a>
-                if (User.IsUserAdmin())
+                @if (User.IsUserAdmin())
                 {
                     <a asp-controller="Product" asp-action="Edit" asp-route-id="@Model.Id"
                    class="btn btn-warning">Edit</a>

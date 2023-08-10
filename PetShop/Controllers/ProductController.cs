@@ -475,8 +475,14 @@
         [HttpGet]
         public async Task<IActionResult> Buy(string id)
         {
+            bool isUserSeller = await this.sellerService.SellerExistsByUserIdAsync(User.GetId()!);
             bool productExist =
                await this.productService.ProductExistByIdAsync(id);
+            if (isUserSeller)
+            {
+                this.TempData[ErrorMessage] = "You can not be a seller if you want to buy something!";
+                return RedirectToAction("Login", "User");
+            }
 
             if (!productExist)
             {
@@ -510,8 +516,14 @@
         [HttpPost]
         public async Task<IActionResult> Buy(string id, ProductBuyViewModel model)
         {
+            bool isUserSeller = await this.sellerService.SellerExistsByUserIdAsync(User.GetId()!);
             bool productExist =
-                await this.productService.ProductExistByIdAsync(id);
+               await this.productService.ProductExistByIdAsync(id);
+            if (isUserSeller)
+            {
+                this.TempData[ErrorMessage] = "You can not be a seller if you want to buy something!";
+                return RedirectToAction("Login", "User");
+            }
 
             if (!productExist)
             {
