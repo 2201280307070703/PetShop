@@ -1,0 +1,67 @@
+﻿@model AllAdminProductsViewModel
+
+@{
+    ViewBag.Title = "My Products";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<h4 class="text-center text-info">My Added Products</h4>
+
+@if (!Model.AddedProducts.Any())
+{
+    <h2 class="text-center text-danger mb-lg-5">You have no added products!</h2>
+}
+
+<div class="row">
+    @foreach (var product in Model.AddedProducts)
+    {
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <img class="card-img-top" src="@product.ImageUrl" alt="Product Image">
+                <div class="card-body text-center">
+                    <h4>@product.Name</h4>
+                    <h6>Description: <b>@product.Description</b></h6>
+                    <h6>
+                        Price for this product is:
+                        <b>@String.Format("{0:f2}", product.Price) BGN</b>
+                    </h6>
+                    <br />
+                    <a asp-area="" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"
+                       class="btn btn-info btn-success">Details</a>
+                    <a asp-area="" asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id"
+                       class="btn btn-danger">Delete</a>
+                    <a asp-area="" asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id"
+                       class="btn btn-warning">Edit</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<h4 class="text-center text-success">My Buyed Products</h4>
+
+@if (!Model.BuyedProducts.Any())
+{
+    <h2 class="text-center text-danger">You have no buyed products!</h2>
+}
+
+<div class="row">
+    @foreach (var product in Model.BuyedProducts)
+    {
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <img class="card-img-top" src="@product.ImageUrl" alt="Product Image">
+                <div class="card-body text-center">
+                    <h4>@product.Name</h4>
+                    <h6>Description: <b>@product.Description</b></h6>
+                    <h6>
+                        Price for this product is:
+                        <b>@String.Format("{0:f2}", product.Price) BGN</b>
+                    </h6>
+                </div>
+            </div>
+        </div>
+    }
+</div>

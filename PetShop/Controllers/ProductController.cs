@@ -7,6 +7,7 @@
     using PetShop.Web.Infrastructure.Extensions;
     using PetShop.Web.ViewModels.Product;
     using static PetShop.Common.NotificationMessagesConstants;
+    using static PetShop.Common.GeneralApplicationConstants;
 
     public class ProductController : BaseController
     {
@@ -142,6 +143,10 @@
         [HttpGet]
         public async Task<IActionResult> Mine()
         {
+            if (User.IsUserAdmin()){
+                return RedirectToAction("Mine", "Product", new { Area = AdminAreaName });
+            }
+
             List<ProductAllViewModel> products = new List<ProductAllViewModel>();
 
             bool isSeller = await this.sellerService.SellerExistsByUserIdAsync(this.User.GetId()!);
@@ -478,7 +483,7 @@
             bool isUserSeller = await this.sellerService.SellerExistsByUserIdAsync(User.GetId()!);
             bool productExist =
                await this.productService.ProductExistByIdAsync(id);
-            if (isUserSeller)
+            if (isUserSeller && !User.IsUserAdmin())
             {
                 this.TempData[ErrorMessage] = "You can not be a seller if you want to buy something!";
                 return RedirectToAction("Login", "User");

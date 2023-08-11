@@ -43,6 +43,7 @@ namespace PetShop
             builder.Services.ConfigureApplicationCookie(c =>
             {
                 c.LoginPath = "/User/Login";
+                c.AccessDeniedPath = "/Home/Error/401";
             });
 
             builder.Services
