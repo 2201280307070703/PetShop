@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
     using PetShop.Data.Models;
+    using PetShop.Web.Infrastructure.Middlewares;
     using System.Reflection;
     using static PetShop.Common.GeneralApplicationConstants;
     public static  class WebApplicationBuilderExtensions
@@ -67,6 +68,11 @@
             }).GetAwaiter().GetResult();
              
             return app;
+        }
+
+        public static IApplicationBuilder EnableOnlineUsersCheck(this IApplicationBuilder app)
+        {
+            return app.UseMiddleware<OnlineUsersMiddleware>();
         }
     }
 }

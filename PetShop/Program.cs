@@ -79,6 +79,9 @@ namespace PetShop
             app.UseAuthentication();
             app.UseAuthorization();
 
+
+            app.EnableOnlineUsersCheck();
+
             app.SeedAdministrator(AdminEmail);
 
             app.UseEndpoints(config =>

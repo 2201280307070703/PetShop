@@ -1,4 +1,5 @@
-﻿@model IEnumerable<AllUsersViewModel>
+﻿@using PetShop.Web.Infrastructure.Middlewares;
+@model IEnumerable<AllUsersViewModel>
 
 @{
     ViewBag.Title = "All Users";
@@ -13,6 +14,7 @@
             <th><label>Email</label></th>
             <th><label>Phone Number</label></th>
             <th class="text-center"><label>User Is Agent</label></th>
+            <th class="text-center"><label>User Is Online</label></th>
         </tr>
     </thead>
     <tbody>
@@ -29,6 +31,15 @@
                 {
                     <td class="text-danger"><label>@user.Email</label></td>
                     <td class="text-danger"><label>@user.PhoneNumber</label></td>
+                    <td class="text-center"><label>❌</label></td>
+                }
+
+                @if (OnlineUsersMiddleware.CheckIfUserIsOnline(user.Id))
+                {
+                    <td class="text-center"><label>✔</label></td>
+                }
+                else
+                {
                     <td class="text-center"><label>❌</label></td>
                 }
             </tr>

@@ -7,5 +7,8 @@
         public const string AdminRoleName = "Administrator";
         public const string AdminEmail = "administrator@admin.petshop";
         public const string AdminAreaName = "Admin";
+
+        public const string OnlineUsersCookieName = "IsOnline";
+        public const int LastActivityBeforeOfflineMinutes = 10;
     }
 }
