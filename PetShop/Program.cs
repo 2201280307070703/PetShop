@@ -39,6 +39,8 @@ namespace PetShop
             builder.Services.AddApplicationServices(typeof(IProductService));
 
             builder.Services.AddRecaptchaService(); 
+            
+            builder.Services.AddMemoryCache();
 
             builder.Services.ConfigureApplicationCookie(c =>
             {

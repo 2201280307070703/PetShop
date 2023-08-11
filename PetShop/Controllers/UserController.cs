@@ -4,25 +4,30 @@
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Caching.Memory;
     using PetShop.Data.Models;
     using PetShop.Sevices.Data.Contracts;
     using PetShop.Web.Infrastructure.Extensions;
     using PetShop.Web.ViewModels.User;
     using static PetShop.Common.NotificationMessagesConstants;
+    using static PetShop.Common.GeneralApplicationConstants;
 
     public class UserController : Controller
     {
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IUserService userService;
+        private readonly IMemoryCache memoryCache;
 
         public UserController(SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager
-            ,IUserService userService)
+            ,IUserService userService,
+            IMemoryCache memoryCache)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
             this.userService = userService;
+            this.memoryCache = memoryCache;
         }
 
        [HttpGet]
@@ -59,6 +64,8 @@
             }
 
             await signInManager.SignInAsync(user, false);
+            this.memoryCache.Remove(UsersCacheKey);
+
             return RedirectToAction("Index", "Home");
         }
 
