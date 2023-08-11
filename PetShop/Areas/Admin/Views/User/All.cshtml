@@ -13,7 +13,7 @@
         <tr>
             <th><label>Email</label></th>
             <th><label>Phone Number</label></th>
-            <th class="text-center"><label>User Is Agent</label></th>
+            <th class="text-center"><label>User Is Seller</label></th>
             <th class="text-center"><label>User Is Online</label></th>
         </tr>
     </thead>
@@ -21,25 +21,32 @@
         @foreach (var user in Model)
         {
             <tr>
-                @if (user.PhoneNumber != string.Empty)
+                @if (OnlineUsersMiddleware.CheckIfUserIsOnline(user.Id))
                 {
                     <td class="text-success"><label>@user.Email</label></td>
                     <td class="text-success"><label>@user.PhoneNumber</label></td>
+                    @if (user.PhoneNumber != string.Empty)
+                    {
+                        <td class="text-center"><label>✔</label></td>
+                    }
+                    else
+                    {
+                        <td class="text-center"><label>❌</label></td>
+                    }
                     <td class="text-center"><label>✔</label></td>
                 }
                 else
                 {
                     <td class="text-danger"><label>@user.Email</label></td>
                     <td class="text-danger"><label>@user.PhoneNumber</label></td>
-                    <td class="text-center"><label>❌</label></td>
-                }
-
-                @if (OnlineUsersMiddleware.CheckIfUserIsOnline(user.Id))
-                {
-                    <td class="text-center"><label>✔</label></td>
-                }
-                else
-                {
+                    @if (user.PhoneNumber != string.Empty)
+                    {
+                        <td class="text-center"><label>✔</label></td>
+                    }
+                    else
+                    {
+                        <td class="text-center"><label>❌</label></td>
+                    }
                     <td class="text-center"><label>❌</label></td>
                 }
             </tr>
