@@ -1,0 +1,1 @@
+﻿To examiner: Please registrate administrator(should make admin to be seller too!)
