@@ -1,8 +1,7 @@
-﻿using PetShop.Web.ViewModels.Product;
-using PetShop.Web.ViewModels.User;
-
-namespace PetShop.Sevices.Data.Contracts
+﻿namespace PetShop.Sevices.Data.Contracts
 {
+    using PetShop.Web.ViewModels.Product;
+    using PetShop.Web.ViewModels.User;
     public interface IUserService
     {
         Task<bool> UserHaveThisProductAlreadyByIdAsync(string userId, string productId);

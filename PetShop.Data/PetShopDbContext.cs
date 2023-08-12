@@ -8,9 +8,12 @@
 
     public class PetShopDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>,Guid>
     {
-        public PetShopDbContext(DbContextOptions<PetShopDbContext> options)
+        private readonly bool seedDb;
+        public PetShopDbContext(DbContextOptions<PetShopDbContext> options,
+            bool seedDb=true)
             : base(options)
         {
+            this.seedDb = seedDb;
         }
 
         public DbSet<Product> Products { get; set; } = null!;
